@@ -9,10 +9,10 @@ class Peeks:
         self.Position: int = 0
 
     def __iter__(self) -> Iterator[T]:
-        return self.Iterator
+        return self
     
     def __next__(self) -> T:
-        return next(self.Iterator)
+        return self.consume(1)
     
     def consume(self, n) -> List[T]:
         retbuff: List[T] = []
