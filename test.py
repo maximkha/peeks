@@ -23,6 +23,8 @@ peeked = Peeks(s)
 while True:
     if peeked.peek(4) == list("am a"):
         print("found it")
+        print(f"{peeked.Position=}")
         break
     elif peeked.consume(1) == [None]:
+        print("didn't find it!")
         break

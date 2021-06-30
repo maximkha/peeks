@@ -17,11 +17,14 @@ class Peeks:
     def consume(self, n) -> List[T]:
         retbuff: List[T] = []
         for _ in range(n):
-            if len(self.Buffer) > 0: retbuff.append(self.Buffer.pop(0))
+            if len(self.Buffer) > 0:
+                retbuff.append(self.Buffer.pop(0))
+                self.Position += 1
             else: 
                 val = None
                 try:
                     val = next(self.Iterator)
+                    self.Position += 1
                 except StopIteration: pass
                 retbuff.append(val)
         return retbuff
@@ -40,3 +43,13 @@ class Peeks:
             self.Buffer.append(val)
             if i >= pos: retbuff.append(val)
         return retbuff
+
+class Peekstr(Peeks):
+    def __init__(self, source: Iterable[str]) -> None:
+        Peeks.__init__(self, source)
+    
+    def consume(self, n) -> str:
+        return "".join(filter(None, Peeks.consume(self, n)))
+    
+    def peek(self, n, pos=0) -> str:
+        return "".join(filter(None, Peeks.peek(self, n, pos)))
